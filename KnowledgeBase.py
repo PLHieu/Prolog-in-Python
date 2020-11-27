@@ -2,6 +2,8 @@
 from Fact import Fact
 from sentence import getnextquery,categorizeofsentence
 from Rule import Rule
+from forward_chaining import forward_chaining
+from backward_chaining import backward_chaining
 
 class KnowledgeBase:
    #fact is list of condition
@@ -24,3 +26,9 @@ class KnowledgeBase:
          elif sent_type == 'rule':
             rule = Rule(sent_str)
             self.rules.append(rule)
+
+   def query(self, alpha, inference=1):
+      if (inference == 1):
+         return forward_chaining(self, alpha)
+      elif (inference == 2):
+         return backward_chaining(self, alpha)
