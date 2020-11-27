@@ -1,17 +1,26 @@
-import sentence
-#import Sentence
-import Fact
 
-import Rule
+from Fact import Fact
+from sentence import getnextquery,categorizeofsentence
+from Rule import Rule
 
 class KnowledgeBase:
-   def __init__(self,list_sentence):
-      while list_sentence:
-         sent_str, list_sentence = nextsentence(list_sent_str)
-         sent_type = categorizeof(sent_str)
+   #fact is list of condition
+
+   def __init__(self):
+      self.facts = set()
+      self.rules = []
+
+   def __init__(self, inp_file):
+      self.facts = set()
+      self.rules = []
+      with open(inp_file, 'r') as f_in:
+         list_sentences = f_in.readlines()
+
+      while list_sentences:
+         sent_str, list_sentences = getnextquery(list_sentences)
+         sent_type = categorizeofsentence(sent_str)
          if sent_type == 'fact':
-            fact = Fact.parse_fact(sent_str)
-            self.fact.append(fact)
+            self.facts.add(Fact(sent_str))
          elif sent_type == 'rule':
             rule = Rule(sent_str)
-            self.fact.append(rule)
+            self.rules.append(rule)

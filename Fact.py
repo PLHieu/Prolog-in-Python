@@ -1,7 +1,33 @@
 class Fact:
-    def __init__(self, op='', args=[], negated=False):
+
+    def __init__(self, *inp):
+        if len(inp)== 1:
+            self.init1(inp[0])
+        elif len(inp)==2:
+            self.init2(inp[0],inp[1])
+        else:
+            self.op=''
+            self.args=[]
+
+    def __hash__(self):
+        return hash(str(self))
+
+    def init2(self, op, args):  # todo : is positive
         self.op = op  # relation or function
         self.args = args  # varibles and constants
+
+
+    def init1(self, str):
+
+        # Example: female(princess_diana).
+        str = str.strip().rstrip('.').replace(' ', '')
+        sep_idx = str.index('(')
+        # Op and args are separated by '('
+        self.op = str[:sep_idx]
+        self.args = str[sep_idx + 1: -1].split(',')
+
+
+
 
     def __repr__(self):
         return '{}({})'.format(self.op, ', '.join(self.args))
@@ -16,10 +42,8 @@ class Fact:
             return False
         return self.args == rhs.args
 
-
-    def copy(self):
-        return Fact(self.op, self.args.copy())
-
+   # def copy(self):
+    #    return Fact(self.op, self.args.copy())
 
     def get_args(self):
         return self.args
@@ -27,13 +51,13 @@ class Fact:
     def get_op(self):
         return self.op
 
-    @staticmethod
-    def parse_fact(str):
+ #   @staticmethod
+ #   def parse_fact(str):
         # Example: female(princess_diana).
-        str = str.strip().rstrip('.').replace(' ', '')
-        sep_idx = str.index('(')
+#        str = str.strip().rstrip('.').replace(' ', '')
+ #       sep_idx = str.index('(')
 
         # Op and args are separated by '('
-        op = str[:sep_idx]
-        args = str[sep_idx + 1: -1].split(',')
-        return Fact(op, args)
+  #      op = str[:sep_idx]
+  #      args = str[sep_idx + 1: -1].split(',')
+  #      return Fact(op, args)

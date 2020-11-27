@@ -9,8 +9,8 @@ def categorizeofsentence(str):
    return 'fact'
 
 def getnextquery(inp_str):
-   next_sentence = inp_str[i].strip()
    i = 0
+   next_sentence = inp_str[i].strip()
    if not next_sentence.startswith('/*'):
       while not next_sentence.endswith('.'):
          i += 1
