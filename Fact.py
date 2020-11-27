@@ -26,7 +26,8 @@ class Fact:
         self.op = str[:sep_idx]
         self.args = str[sep_idx + 1: -1].split(',')
 
-
+    def copy(self):
+        return Fact(self.op,self.args)
 
 
     def __repr__(self):

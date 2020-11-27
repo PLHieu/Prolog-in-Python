@@ -10,8 +10,13 @@ class Rule:
           self.init1(inp[0])
        else:
           self.init2(inp[0], inp[1])
+       self.conditions.sort()
 
+   def __repr__(self):
+      return '{} => {}'.format(' & '.join([str(cond) for cond in self.conditions]), str(self.conclusion))
 
+   def copy(self):
+      return Rule(self.conclusion.copy(), self.premises.copy())
    def init1(self,rule_str):
       # Example: daughter(Person, Parent) :- female(Person), parent(Parent, Person).
       rule_str = rule_str.strip().rstrip('.').replace(' ', '')
@@ -44,8 +49,16 @@ class Rule:
          ops.add(condition.op)
       return ops
 
-   def helpful(self, fact_op):
-      return fact_op in self.ops
+   def contains_op(self, fact):
+      for condition in self.conditions:
+         if (condition.op == fact.op):
+            return True
+      return False
 
-
-
+#input is list facts
+   def get_appropciate_fact(self, facts):
+      approcitate_fact = []
+      for fact in facts:
+         if self.contains_op(fact):
+            approcitate_fact.append(fact)
+      return approcitate_fact

@@ -1,3 +1,8 @@
 criminal(X).
+.
 X = west.
+
+criminal(nopno).
+.
+false.
 

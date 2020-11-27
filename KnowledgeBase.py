@@ -8,9 +8,10 @@ from resolution_chaining import resolution_chaining
 class KnowledgeBase:
    #fact is list of condition
 
-   def __init__(self):
-      self.facts = set()
-      self.rules = []
+   def __init__(self, facts, rules):
+      self.facts = facts
+      self.rules = rules
+
 
    def __init__(self, inp_file):
       self.facts = set()
@@ -34,3 +35,4 @@ class KnowledgeBase:
          return backward_chaining(self, alpha)
       elif (inference ==3):
          return resolution_chaining(self,alpha)
+
