@@ -1,5 +1,8 @@
 from checkarg import is_list,is_variable,is_compound
+import copy
 class Fact:
+    def __deepcopy__(self, memodict={}):
+        return Fact(self.op,copy.deepcopy(self.args))
 
     def __init__(self, *inp):
         if len(inp)== 1:

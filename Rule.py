@@ -1,6 +1,7 @@
 
 from Fact import Fact
 import random
+import copy
 class Rule:
        # conditions: list of facts
 
@@ -30,6 +31,10 @@ class Rule:
          if idx != len(list_fact_str) - 1:
             fact_str += ')'
          self.conditions.append(Fact(fact_str))
+
+   def __deepcopy__(self, memodict={}):
+      return Rule(self.conclusion.copy(), copy.deepcopy(self.conditions))
+
 
    def init2(self, conclusion=Fact(), conditions=[]):
       self.conclusion = conclusion  # inferred fact

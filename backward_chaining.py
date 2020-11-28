@@ -1,20 +1,6 @@
 from unify import unify,is_variable,is_compound,is_list
 from ClassTheta import Theta
-
-
-
-
-def unify_of_rule(facts_1, facts_2):  # Generalized Modus Ponens
-    if len(facts_1) != len(facts_2):
-        return False
-
-    for f1, f2 in zip(facts_1, facts_2):
-        if f1.op != f2.op:
-            return False
-
-    return unify(facts_1, facts_2, Theta())
-
-
+import copy
 
 
 def fol_bc_ask(facts_of_kb, rules_of_kb, querys, theta, query):
@@ -30,10 +16,6 @@ def fol_bc_ask(facts_of_kb, rules_of_kb, querys, theta, query):
         return res
 
     accepted_fact = querys[0]
-
-
-
-
 
     for i in range(len(accepted_fact.args)):
         const = theta.get_const(accepted_fact.args[i])
@@ -113,8 +95,9 @@ def fol_bc_ask(facts_of_kb, rules_of_kb, querys, theta, query):
 
 
 def backward_chaining(kb, query):
-    facts_of_kb = set(kb.facts.copy())
-    rules_of_kb = list(kb.rules.copy())
+
+    facts_of_kb = copy.deepcopy(kb.facts)
+    rules_of_kb = copy.deepcopy(kb.rules)
 
 
     theta = Theta()
