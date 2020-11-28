@@ -1,17 +1,4 @@
-mother(X, prince_andrew).
+american(X).
 .
-X = sophie_rhys_jones ;
-X = princess_charlotte ;
-X = princess_eugenie ;
-X = princess_anne ;
-X = meghan_markle ;
-X = zara_tindall ;
-X = lady_louise ;
-X = queen_elizabethII ;
-X = princess_beatrice ;
-X = sarah_ferguson ;
-X = princess_diana ;
-X = autumn_phillips ;
-X = camilla_parker_bowles ;
-X = kate_middleton.
+.
 

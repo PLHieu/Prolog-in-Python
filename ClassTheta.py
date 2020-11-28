@@ -21,3 +21,8 @@ class Theta:
 
    def add(self, var, value):
       self.mappings[var] = value
+
+   def get_key(self,val):
+      for key, value in self.mappings.items():
+         if val == value:
+             return key

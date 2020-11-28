@@ -44,8 +44,6 @@ class Fact:
             return False
         return self.args == rhs.args
 
-    def copy(self):
-        return Fact(self.op, self.args.copy())
     def contains_variable(self):
         for arg in self.args:
             if is_variable(arg):
@@ -64,13 +62,4 @@ class Fact:
     def get_op(self):
         return self.op
 
- #   @staticmethod
- #   def parse_fact(str):
-        # Example: female(princess_diana).
-#        str = str.strip().rstrip('.').replace(' ', '')
- #       sep_idx = str.index('(')
 
-        # Op and args are separated by '('
-  #      op = str[:sep_idx]
-  #      args = str[sep_idx + 1: -1].split(',')
-  #      return Fact(op, args)

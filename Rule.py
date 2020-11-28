@@ -1,6 +1,6 @@
 
 from Fact import Fact
-
+import random
 class Rule:
        # conditions: list of facts
 
@@ -15,8 +15,7 @@ class Rule:
    def __repr__(self):
       return '{} => {}'.format(' & '.join([str(cond) for cond in self.conditions]), str(self.conclusion))
 
-   def copy(self):
-      return Rule(self.conclusion.copy(), self.premises.copy())
+
    def init1(self,rule_str):
       # Example: daughter(Person, Parent) :- female(Person), parent(Parent, Person).
       rule_str = rule_str.strip().rstrip('.').replace(' ', '')
@@ -49,9 +48,18 @@ class Rule:
    def get_num_premises(self):
       return len(self.conditions)
 
-   def generate_variable_name(self, key):
-      init_name = "X"+ key
-      i=1
+   def change_variable_to(self,variable_name, new_variable_name):
+      for idx in range(len(self.conclusion.args)):
+         if self.conclusion.args[idx] == variable_name:
+            self.conclusion.args[idx] = new_variable_name
+      for condtion in self.conditions:
+         for idx in range(len(condtion.args)):
+            if condtion.args[idx] == variable_name:
+               condtion.args[idx] = new_variable_name
+
+   def generate_variable_name(self):
+      i = random.randint(0, 1000)
+      init_name = "X" + str(i)
       while self.contains_arg(init_name):
          init_name = init_name + str(i)
          i = i+1
