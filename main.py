@@ -5,6 +5,7 @@ query_file = 'test/query.pl'
 outp_file = 'test/answers.txt'
 
 
+
 if __name__ == '__main__':
     kb = KnowledgeBase(inp_file)
     with open(query_file, 'r') as f_query:
@@ -13,7 +14,7 @@ if __name__ == '__main__':
 
              query = Fact(query_str)
              query_str = query_str + '.'
-             theta_result = set(kb.query(query))
+             theta_result = set(kb.query(query, 2))
              substs_str = ' ;\n'.join([str(subst) for subst in theta_result]) + '.\n'
              print(substs_str)
              f_out.write(query_str + '\n')

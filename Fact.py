@@ -1,3 +1,4 @@
+from checkarg import is_list,is_variable,is_compound
 class Fact:
 
     def __init__(self, *inp):
@@ -27,7 +28,7 @@ class Fact:
         self.args = str[sep_idx + 1: -1].split(',')
 
     def copy(self):
-        return Fact(self.op,self.args)
+        return Fact(self.op,self.args.copy())
 
 
     def __repr__(self):
@@ -43,8 +44,19 @@ class Fact:
             return False
         return self.args == rhs.args
 
-   # def copy(self):
-    #    return Fact(self.op, self.args.copy())
+    def copy(self):
+        return Fact(self.op, self.args.copy())
+    def contains_variable(self):
+        for arg in self.args:
+            if is_variable(arg):
+                return True
+        return False
+
+    def contains_in_args(self,arg):
+        for arg0 in self.args:
+            if arg0==arg:
+                return True
+        return False
 
     def get_args(self):
         return self.args

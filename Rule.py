@@ -36,12 +36,37 @@ class Rule:
       self.conclusion = conclusion  # inferred fact
       self.conditions = conditions
 
+   def is_potential_with(self, new_facts):
+      for fact in new_facts:
+         for condition in self.conditions:
+            if (fact.op==condition.op):
+               return True
+      return False
 
    def copy(self):
-      return Rule(self.conclusion.copy(), self.condition.copy())
+      return Rule(self.conclusion.copy(), self.conditions.copy())
 
    def get_num_premises(self):
       return len(self.conditions)
+
+   def generate_variable_name(self, key):
+      init_name = "X"+ key
+      i=1
+      while self.contains_arg(init_name):
+         init_name = init_name + str(i)
+         i = i+1
+      return init_name
+
+
+   def contains_arg(self, arg):
+      for condition in self.conditions:
+         for arg0 in condition.args:
+            if (arg0== arg):
+               return True
+      for arg0 in self.conclusion.args:
+         if arg0 == arg:
+            return True
+      return False
 
    def get_ops(self):
       ops = set()
@@ -53,6 +78,8 @@ class Rule:
       for condition in self.conditions:
          if (condition.op == fact.op):
             return True
+      if fact.op == self.conclusion:
+         return True
       return False
 
 #input is list facts

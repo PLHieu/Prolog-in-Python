@@ -11,12 +11,12 @@ def categorizeofsentence(str):
 def getnextquery(inp_str):
    i = 0
    next_sentence = inp_str[i].strip()
-   if not next_sentence.startswith('/*'):
-      while not next_sentence.endswith('.'):
+   if next_sentence.startswith('/*'):  # Comments
+      while not next_sentence.endswith('*/'):
          i += 1
          next_sentence += inp_str[i].strip()
-   elif next_sentence:
-      while not next_sentence.endswith('*/'):
+   elif next_sentence:  # Queries
+      while not next_sentence.endswith('.'):
          i += 1
          next_sentence += inp_str[i].strip()
 #return next sentence and remain string
