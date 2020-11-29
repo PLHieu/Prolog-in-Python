@@ -1,5 +1,5 @@
-from unify import unify,is_variable,is_compound,is_list
-from ClassTheta import Theta
+from utility.unify import unify,is_variable
+from object.ClassTheta import *
 import copy
 
 

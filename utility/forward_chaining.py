@@ -1,5 +1,5 @@
-from unify import unify
-from ClassTheta import  Theta
+from utility.unify import unify
+from object.ClassTheta import *
 from itertools import permutations
 
 

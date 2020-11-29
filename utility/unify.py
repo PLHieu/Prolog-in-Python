@@ -1,5 +1,5 @@
-from Fact import Fact
-from checkarg import is_compound,is_variable,is_list
+from object.Fact import *
+from utility.utils import is_compound,is_variable,is_list
 def is_variable(x):
    return isinstance(x, str) and x[0].isupper()
 

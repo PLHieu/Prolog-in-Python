@@ -1,6 +1,5 @@
-from Fact import *
+from object.Fact import *
 import copy
-
 
 class Statement():
 

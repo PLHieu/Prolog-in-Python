@@ -1,6 +1,6 @@
-from checkarg import is_list,is_variable,is_compound
+from utility.utils import is_variable
 import copy
-from utils import *
+from utility.utils import *
 
 class Fact:
     def __deepcopy__(self, memodict={}):

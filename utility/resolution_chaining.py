@@ -1,8 +1,7 @@
 import copy
-from utils import *
-
-from CNF_Sentence import Statement
-from Fact import Fact
+from utility.utils import *
+from object.CNF_Sentence import Statement
+from object.Fact import Fact
 # alpha la mot Fact
 def resolution_chaining(kb,alpha):
 
