@@ -10,7 +10,6 @@ def resolution_chaining(kb,alpha):
     # kb nay se o dang list cho de
     # Them cac facts
     for f in kb.facts:
-        test = Statement(f,1)
         temp_kb.add(Statement(f,1))
 
     # Them cac rule o dang cnf

@@ -39,7 +39,7 @@ class Fact:
         # parse Arguments
         self.args = str[sep_idx + 1: -1].split(',')
 	
-	def copy(self):
+    def copy(self):
         return Fact(self.op,self.args.copy(), self.negative)
 
     def negate(self):
@@ -94,10 +94,10 @@ class Fact:
 
     def unify_with_predicate(self, predicate):
         """
-        dong nhat 2 fact voi nhau khi chung co cung vi tu va cung so luong cac tham so
-        tra ve false neu nhu khong dong nhat duoc
+        dong nhat 2 fact trai dau, cung vitu voi nhau va cung so luong cac tham so
+        tra ve false neu nhu khong dong nhat duoc, cung la bien, cung la hang o cac vi tri tuong ung, hoac khac do dai
         """
-        if self.op == predicate.op and len(self.args) == len(predicate.args):
+        if len(self.args) == len(predicate.args):
             substitution = {}
             return self.unify(self.args, predicate.args, substitution)
         else:
@@ -116,7 +116,8 @@ class Fact:
 
     def unify(self, predicate1_arg, predicate2_arg, substitution):
         """
-        dong nhat gia tri cua cac hang tu
+        dong nhat gia tri cua cac hang tu va tra ve mot dictionary anh xa
+        tra ve False neu nhu khong anh xa duoc: cung la hang, cung la bien o 2 vi tri tuong ung
         """
         if substitution == False:
             return False
@@ -127,6 +128,7 @@ class Fact:
         elif isinstance(predicate2_arg, str) and predicate2_arg.islower():
             return self.unify_var(predicate2_arg, predicate1_arg, substitution)
         elif isinstance(predicate1_arg, list) and isinstance(predicate2_arg, list):
+            # neu ca 2 danh sach deu !rong
             if predicate1_arg and predicate2_arg:
                 return self.unify(predicate1_arg[1:], predicate2_arg[1:],
                                   self.unify(predicate1_arg[0], predicate2_arg[0], substitution))

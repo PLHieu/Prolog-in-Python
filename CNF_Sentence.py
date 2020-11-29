@@ -3,13 +3,7 @@ import copy
 
 
 class Statement():
-    """
-    defines one FOL statement and the operations allowed on them
-    member variables include:
-    predicate_set : set of 'Predicate' objects which are
-    connected via OR operator in a statement
-    statement_string : string representation of statement
-    """
+
     # def __init__(self, statement_string=None):
     #     if statement_string:
     #         predicate_list = statement_string.split('|')
@@ -64,7 +58,6 @@ class Statement():
 
     def init_from_string(self, statement_string):
         """
-        initializes a Statement object from statement string
         """
         predicate_list = statement_string.split('|')
         predicate_list = map(lambda x: Fact(x), predicate_list)
@@ -74,10 +67,9 @@ class Statement():
 
     def init_from_predicate_set(self, predicate_set):
         """
-        initializes Statement object from a predicate set
         """
         self.predicate_set = predicate_set
-        statement_string_list = map(lambda x: x.predicate_string, predicate_set)
+        statement_string_list = map(lambda x: str(x), predicate_set)
         self.statement_string = '|'.join(statement_string_list)
 
     def __str__(self):
@@ -111,9 +103,9 @@ class Statement():
 
     def resolve(self, statement):
         '''
-        Resolves two statements
-        returns False if a contradiction is encountered when resolved otherwise,
-        returns set of new infered statements(empty if no statements infered)
+        hopgiai
+        return false neu nhu phat hien menh de doi ngau -> dpcm
+        return set cac kien thuc moi, set la {} neu nhu khong co kien thuc moi
         '''
         infered_statements = set()
         # lan luot ghep tung cap vi tu co trong 2 cau, neu nhu cap nao co cung ten va khac dau thi hop giai
@@ -124,10 +116,10 @@ class Statement():
         for predicate_1 in self.predicate_set:
             for predicate_2 in statement.predicate_set:
                 unification = False
-                # neu nhu 2 menh de la khac dau nhau va co cung vi tu
+                # neu nhu 2 fact la khac dau nhau va co cung vi tu
                 if (predicate_1.negative ^ predicate_2.negative) and predicate_1.op == predicate_2.op:
                     unification = predicate_1.unify_with_predicate(
-                        predicate_2)  # returns substitution if statements can unify else false
+                        predicate_2)
 
                 if unification == False:
                     continue
