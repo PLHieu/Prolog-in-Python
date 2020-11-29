@@ -25,7 +25,7 @@ def resolution_chaining(kb,alpha):
     alphaStatement.add_statement_to_KB(temp_kb, KB_HASH)
 
 
-    while(len(temp_kb) < 50): #gioi han so phan tu co trong kb la 50
+    while(len(temp_kb) < 200): #gioi han so phan tu co trong kb la 50
 
         history = {}
         new_statements = set()

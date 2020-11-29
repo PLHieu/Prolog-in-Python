@@ -2,7 +2,7 @@ from checkarg import is_list,is_variable,is_compound
 import copy
 class Fact:
     def __deepcopy__(self, memodict={}):
-        return Fact(self.op,copy.deepcopy(self.args))
+        return Fact(self.op,copy.deepcopy(self.args),self.negative)
 
     def __init__(self, *inp):
         if len(inp)== 1:
@@ -96,6 +96,7 @@ class Fact:
         """
         dong nhat 2 fact trai dau, cung vitu voi nhau va cung so luong cac tham so
         tra ve false neu nhu khong dong nhat duoc, cung la bien, cung la hang o cac vi tri tuong ung, hoac khac do dai
+        tra ve diction anh xa
         """
         if len(self.args) == len(predicate.args):
             substitution = {}
@@ -124,9 +125,19 @@ class Fact:
         elif predicate1_arg == predicate2_arg:
             return substitution
         elif isinstance(predicate1_arg, str) and predicate1_arg.islower():
-            return self.unify_var(predicate1_arg, predicate2_arg, substitution)
-        elif isinstance(predicate2_arg, str) and predicate2_arg.islower():
+            # de var len truoc constant
+            # return self.unify_var(predicate1_arg, predicate2_arg, substitution)
             return self.unify_var(predicate2_arg, predicate1_arg, substitution)
+
+        elif isinstance(predicate2_arg, str) and predicate2_arg.islower():
+            # de var len truoc constant
+            # return self.unify_var(predicate2_arg, predicate1_arg, substitution)
+            return self.unify_var(predicate1_arg, predicate2_arg, substitution)
+
+        # todo: can nhac khong ao ra kn moi, ngoai ra con co the dong nhat duoc 2 bien -> tao thanh 1 bien
+        elif isinstance(predicate1_arg, str) and predicate1_arg.isupper() and  isinstance(predicate2_arg, str) and predicate2_arg.isupper():
+            return self.unify_var(predicate1_arg, predicate2_arg, substitution)
+
         elif isinstance(predicate1_arg, list) and isinstance(predicate2_arg, list):
             # neu ca 2 danh sach deu !rong
             if predicate1_arg and predicate2_arg:
