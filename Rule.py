@@ -91,7 +91,7 @@ class Rule:
       for condition in self.conditions:
          if (condition.op == fact.op):
             return True
-      if fact.op == self.conclusion:
+      if fact.op == self.conclusion.op:
          return True
       return False
 

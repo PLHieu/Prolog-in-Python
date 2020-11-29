@@ -1,17 +1,9 @@
-female(queen_elizabethII).
+criminal(X) :- american(X), weapon(Y), sell(X, Y, Z), hostile(Z).
+sell(west, X, nono) :- missile(X), own(nono, X).
+weapon(X) :- missile(X).
+hostile(X) :- enemy(X, america).
 
-married(queen_elizabethII, prince_philip).
-married(prince_philip,queen_elizabethII).
-
-
-parent(queen_elizabethII, prince_charles).
-parent(prince_philip, prince_charles).
-parent(queen_elizabethII, prince_andrew).
-parent(prince_philip, prince_andrew).
-parent(queen_elizabethII, princess_anne).
-parent(prince_philip, princess_anne).
-parent(queen_elizabethII, prince_edward).
-parent(prince_philip, prince_edward).
-
-father(Parent,Child) :- parent(Parent,Child), male(Parent).
-mother(Parent,Child) :- parent(Parent,Child), female(Parent).
+own(nono, b52).
+missile(b52).
+american(west).
+enemy(nono, america).

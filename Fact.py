@@ -155,6 +155,11 @@ class Fact:
                 return substitution
         else:
             return False
+    def get_args(self):
+        return self.args
+
+    def get_op(self):
+        return self.op
 
     def unify_var(self, var, x, substitution):
         if var in substitution:
