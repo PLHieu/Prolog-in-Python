@@ -1,5 +1,7 @@
 from checkarg import is_list,is_variable,is_compound
 import copy
+from utils import *
+
 class Fact:
     def __deepcopy__(self, memodict={}):
         return Fact(self.op,copy.deepcopy(self.args),self.negative)
@@ -124,18 +126,24 @@ class Fact:
             return False
         elif predicate1_arg == predicate2_arg:
             return substitution
-        elif isinstance(predicate1_arg, str) and predicate1_arg.islower():
+
+        elif isinstance(predicate1_arg, str) and isLower(predicate1_arg) \
+                and  isinstance(predicate2_arg, str) and isLower(predicate2_arg):
+            return False
+
+        elif isinstance(predicate1_arg, str) and isLower(predicate1_arg):
             # de var len truoc constant
             # return self.unify_var(predicate1_arg, predicate2_arg, substitution)
             return self.unify_var(predicate2_arg, predicate1_arg, substitution)
 
-        elif isinstance(predicate2_arg, str) and predicate2_arg.islower():
+        elif isinstance(predicate2_arg, str) and isLower(predicate2_arg):
             # de var len truoc constant
             # return self.unify_var(predicate2_arg, predicate1_arg, substitution)
             return self.unify_var(predicate1_arg, predicate2_arg, substitution)
 
         # todo: can nhac khong ao ra kn moi, ngoai ra con co the dong nhat duoc 2 bien -> tao thanh 1 bien
-        elif isinstance(predicate1_arg, str) and predicate1_arg.isupper() and  isinstance(predicate2_arg, str) and predicate2_arg.isupper():
+        elif isinstance(predicate1_arg, str) and isUpper(predicate1_arg) \
+                and  isinstance(predicate2_arg, str) and isUpper(predicate2_arg) :
             return self.unify_var(predicate1_arg, predicate2_arg, substitution)
 
         elif isinstance(predicate1_arg, list) and isinstance(predicate2_arg, list):
@@ -156,3 +164,4 @@ class Fact:
         else:
             substitution[var] = x
             return substitution
+

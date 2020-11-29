@@ -1,6 +1,8 @@
+import copy
+from utils import *
 
 from CNF_Sentence import Statement
-
+from Fact import Fact
 # alpha la mot Fact
 def resolution_chaining(kb,alpha):
 
@@ -16,14 +18,42 @@ def resolution_chaining(kb,alpha):
     for rule in kb.rules:
         temp_kb.add(Statement(rule,2))
 
+
+    # Neu nhu la query dang yes/no question
+    if not(haveElementUppercase(alpha.args)):
+        alpha.negate()
+        return startloop(temp_kb, alpha)
+
+    # Neu nhu alpha o dang cau hoi Ai ? Caigi?
+    else:
+        # Thuc hien them vao temp_kb phu dinh tat ca cac truong hop co the cua alpha
+        # Vi du: animal(X) thi them vao kb ~animal(ga), ~animal(heo)
+        constant = kb.getConstants()
+
+        # tim vi tri var trong args_alpha
+        args_alpha = alpha.args
+        i = 0
+        for i in range(0, len(args_alpha)):
+            if args_alpha[i].isupper():
+                break
+
+        for co in constant:
+            temp_kb2 = copy.deepcopy(temp_kb)
+            args_alpha_temp = copy.deepcopy(args_alpha)
+            args_alpha_temp[i] = co
+            new_fact = Fact(alpha.op, args_alpha_temp, True) #todo phu dinh alpha
+            # alphaStatement = Statement(new_fact, 1)
+            # alphaStatement.add_statement_to_KB(KB2, KB_HASH)
+            # alphaStatement.add_statement_to_KB(temp_kb, KB_HASH)
+            return startloop(temp_kb2, new_fact)
+
+def startloop(temp_kb, new_fact):
     KB2 = set()
     KB_HASH = {}
-    # Them vao trong kb phu dinh cua alpha
-    alpha.negate()
-    alphaStatement = Statement(alpha,1)
+
+    alphaStatement = Statement(new_fact, 1)
     alphaStatement.add_statement_to_KB(KB2, KB_HASH)
     alphaStatement.add_statement_to_KB(temp_kb, KB_HASH)
-
 
     while(len(temp_kb) < 200): #gioi han so phan tu co trong kb la 50
 
@@ -57,6 +87,10 @@ def resolution_chaining(kb,alpha):
 
                 # neu nhu tra ve False tuc la 2 menh de doi ngau -> dpcm
                 if resolvents == False:
+                    # todo: chinh lai cho nay
+                    # print(statement1, statement2, sep="***")
+                    # return str(statement1)
+                    # print(new_fact)
                     return True
                 new_statements = new_statements.union(resolvents)
         if new_statements.issubset(temp_kb):
@@ -73,6 +107,21 @@ def resolution_chaining(kb,alpha):
 
 
         temp_kb = temp_kb.union(new_statements)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

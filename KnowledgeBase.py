@@ -37,4 +37,10 @@ class KnowledgeBase:
       elif (inference ==3):
          return resolution_chaining(self,alpha)
 
+   def getConstants(self):
+      result = set()
+      for fa in self.facts:
+         for arg in fa.args:
+            result.add(arg)
+      return result
 

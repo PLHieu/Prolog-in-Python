@@ -121,7 +121,7 @@ class Statement():
                     unification = predicate_1.unify_with_predicate(
                         predicate_2)
 
-                if unification == False:
+                if (unification == False):
                     continue
                 else:
                     rest_statement_1 = copy.deepcopy(self.predicate_set)
