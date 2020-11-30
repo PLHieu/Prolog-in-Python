@@ -31,7 +31,7 @@ def forward_chaining(kb, query):
 
     while True:
         new_facts=[]
-        for  rule in rules_of_kb:
+        for rule in rules_of_kb:
             #if neareast facts do not support this rule then continute
             if not rule.is_potential_with(neareast_facts):
                 continue

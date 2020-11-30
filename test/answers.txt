@@ -2,6 +2,10 @@ criminal(X).
 .
 X = west.
 
-criminal(west)..
+criminal(west).
+.
 true.
+
+sell(west,X,nono)..
+X = b52.
 
