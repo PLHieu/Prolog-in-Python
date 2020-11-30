@@ -1,7 +1,7 @@
 from object import Fact
 from object.Fact import *
-def isUpper(string):
-    if (string[0].isupper()):
+def isUpper(pre):
+    if (pre[0].isupper()):
         return True
     return False
 
@@ -10,11 +10,14 @@ def isLower(string):
         return True
     return False
 
-def haveElementUppercase(l):
-    for str in l:
-        if isUpper(str):
-            return True
-    return False
+def cacuElementUppercase(l):
+    list_index_var = []
+    n = len(l)
+    for i in range(0,n):
+        if isUpper(l[i]):
+            list_index_var.append(i)
+
+    return list_index_var
 
 def categorizeofsentence(str):
    sent_str = str.strip()

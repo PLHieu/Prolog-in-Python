@@ -1,6 +1,7 @@
 from utility.utils import *
 from object.CNF_Sentence import Statement
 from object.Fact import Fact
+import itertools
 # alpha la mot Fact
 def resolution_chaining(kb,alpha):
 
@@ -19,14 +20,15 @@ def resolution_chaining(kb,alpha):
     # init result list
     result = set()
 
-    # Neu nhu la query dang yes/no question
-    if not(haveElementUppercase(alpha.args)):
-        alpha.negate()
+    list_index_var = cacuElementUppercase(alpha.args)
+    n = len(list_index_var)
 
+    # Neu nhu la query dang yes/no question
+    if n == 0:
+        alpha.negate()
         r = startloop(temp_kb, alpha)
         if r:
             result.add(True)
-
         return result
 
     # Neu nhu alpha o dang cau hoi Ai ? Caigi?
@@ -35,26 +37,31 @@ def resolution_chaining(kb,alpha):
         # Vi du: animal(X) thi them vao kb ~animal(ga), ~animal(heo)
         constant = kb.getConstants()
 
-        # tim vi tri var trong args_alpha
-        args_alpha = alpha.args
-        i = 0
-        for i in range(0, len(args_alpha)):
-            if args_alpha[i].isupper():
-                break
-
-        for co in constant:
+        # tao to hop
+        permusla = list(itertools.permutations(constant,n))
+        size_permusla = len(permusla)
+        for one_case in permusla:
+            # temp_kb2.clear()
             temp_kb2 = copy.deepcopy(temp_kb)
-            args_alpha_temp = copy.deepcopy(args_alpha)
-            args_alpha_temp[i] = co
-            new_fact = Fact(alpha.op, args_alpha_temp, True) #todo phu dinh alpha
-            # alphaStatement = Statement(new_fact, 1)
-            # alphaStatement.add_statement_to_KB(KB2, KB_HASH)
-            # alphaStatement.add_statement_to_KB(temp_kb, KB_HASH)
+            args_alpha_temp = copy.deepcopy(alpha.args)
+            #copy tung to hop sang alpha moi
+            for i in range(0,n):
+                a = list_index_var[i]
+                b = args_alpha_temp[list_index_var[i]]
+                args_alpha_temp[list_index_var[i]] = one_case[i]
+            new_fact = Fact(alpha.op, args_alpha_temp, True)
             r = startloop(temp_kb2, new_fact)
             if r:
-                result.add(co)
-
+                # tao string la cau tra loi roi add vao result
+                str_temp = ""
+                for i in range(0,n):
+                    str_temp = str_temp + alpha.args[list_index_var[i]] + " = "+ one_case[i]
+                    if(i<n-1):
+                        str_temp += ','
+                result.add(str_temp)
         return result
+
+
 
 def startloop(temp_kb, new_fact, co = True):
     KB2 = set()
@@ -64,7 +71,7 @@ def startloop(temp_kb, new_fact, co = True):
     alphaStatement.add_statement_to_KB(KB2, KB_HASH)
     alphaStatement.add_statement_to_KB(temp_kb, KB_HASH)
 
-    while(len(temp_kb) < 200): #gioi han so phan tu co trong kb la 50
+    while(len(temp_kb) < 1000): #gioi han so phan tu co trong kb la 1000
 
         history = {}
         new_statements = set()
@@ -96,10 +103,6 @@ def startloop(temp_kb, new_fact, co = True):
 
                 # neu nhu tra ve False tuc la 2 menh de doi ngau -> dpcm
                 if resolvents == False:
-                    # todo: chinh lai cho nay
-                    # print(statement1, statement2, sep="***")
-                    # return str(statement1)
-                    # print(new_fact)
                     return True
                 new_statements = new_statements.union(resolvents)
         if new_statements.issubset(temp_kb):

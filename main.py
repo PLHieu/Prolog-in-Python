@@ -15,8 +15,6 @@ def queryIntime():
          type = input("Type of reasoning (1-Forward, 2-Backward, 3-Resolution): ")
          alpha = Fact(query_string)
          result = kb.query(alpha, int(type))
-         # for r in result:
-         #    print("  ", r)
          print(result)
 
 
@@ -30,11 +28,9 @@ def genOutputfile():
       with open(outp_file, 'w') as f_out:
          for line in f_query.readlines():
             alpha = Fact(line)
-            line = line + '.'
-            theta_result = kb.query(alpha, int(type_reasoning))
-            # theta_result = set(a)
-            substs_str = ' ;\n'.join([str(subst) for subst in theta_result]) + '.\n'
-            f_out.write(line + '\n')
+            result = kb.query(alpha, int(type_reasoning))
+            substs_str = ' ;\n'.join([str(subst) for subst in result]) + '.\n'
+            f_out.write('?- ' + line)
             f_out.write(substs_str + '\n')
 
 if __name__ == '__main__':
