@@ -35,11 +35,7 @@ class Statement():
                 self.predicate_set.add(factRule.conclusion)
 
             # tien xu li statement
-
-
             self.updateStatementString()
-
-
         else:
             self.statement_string = None
             self.predicate_set = None
@@ -56,8 +52,6 @@ class Statement():
             i = i + 1
 
     def init_from_string(self, statement_string):
-        """
-        """
         predicate_list = statement_string.split('|')
         predicate_list = map(lambda x: Fact(x), predicate_list)
         self.predicate_set = set(predicate_list)
@@ -65,8 +59,6 @@ class Statement():
         self.statement_string = '|'.join(statement_string_list)
 
     def init_from_predicate_set(self, predicate_set):
-        """
-        """
         self.predicate_set = predicate_set
         statement_string_list = map(lambda x: str(x), predicate_set)
         self.statement_string = '|'.join(statement_string_list)
@@ -81,18 +73,11 @@ class Statement():
         return hash((''.join(sorted(self.statement_string))))
 
     def exists_in_KB(self, KB):
-        '''
-        returns true if cnf_statement already exists
-        in the KNOWLEDGE_BASE else False
-        '''
         if self in KB:
             return True
         return False
 
     def add_statement_to_KB(self, KB, KB_HASH):
-        """
-        adds a statement in a knowledge base and updates the Hash
-        """
         KB.add(self)
         for predicate in self.predicate_set:
             if predicate.op in KB_HASH:

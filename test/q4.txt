@@ -1,0 +1,21 @@
+vua(dat).
+vua(X).
+thuoc_ha(kien,X).
+thuoc_ha(X,son).
+thai_giam(X,hieu).
+quan(hai,dat).
+hoang_tu(X,son).
+hoang_thai_tu(cong_vinh,hieu).
+cong_chua(hari, dat).
+cong_chua(X, hieu).
+hoang_tu_phi(thuy_tien, hieu).
+pho_ma(X,dat).
+phan_quoc(phu,dat).
+phan_quoc(X,son).
+noi_gian(dang,dat,son).
+noi_gian(phu,son,dat).
+dong_minh(dat,son).
+ke_thu(dat,son).
+dong_minh(X,dat).
+dong_minh(dat,X).
+su_gia(X,dat,hieu).

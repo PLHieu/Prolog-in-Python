@@ -5,7 +5,6 @@ from utility.forward_chaining import forward_chaining
 from utility.backward_chaining import backward_chaining
 from utility.resolution_chaining import resolution_chaining
 class KnowledgeBase:
-   #fact is list of condition
 
    def __init__(self, facts, rules):
       self.facts = facts

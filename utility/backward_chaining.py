@@ -1,10 +1,8 @@
 from utility.unify import unify,is_variable
-from object.ClassTheta import *
+from object.Theta import *
 import copy
 
-
 def fol_bc_ask(facts_of_kb, rules_of_kb, querys, theta, query):
-
     res=set()
     if len(querys)==0:
         if theta:
@@ -22,22 +20,16 @@ def fol_bc_ask(facts_of_kb, rules_of_kb, querys, theta, query):
         if (const):
             accepted_fact.args[i] = const
 
-
-
     for fact in facts_of_kb:
         new_theta = unify(fact, accepted_fact, Theta())
         if new_theta:
             new_theta.mappings.update(theta.mappings)
             res.update(fol_bc_ask(facts_of_kb, rules_of_kb, querys[1:].copy(), new_theta,query))
 
-
     for rule in rules_of_kb:
-
         new_rule = rule.copy()
         #doi bien cho accept_fact va rule khac nhau
         #chi doi bien cura accepted_fact
-
-
 
         new_theta = unify(accepted_fact,new_rule.conclusion, Theta())
         if not new_theta:
@@ -54,7 +46,6 @@ def fol_bc_ask(facts_of_kb, rules_of_kb, querys, theta, query):
                 if theta.get_key(value):
                     variable_theta.add(key,theta.get_key(value))
 
-
         if len(variable_theta.mappings)!=0:
             for condition in new_rule.conditions:
                 for idx in range(len(condition.args)):
@@ -62,50 +53,33 @@ def fol_bc_ask(facts_of_kb, rules_of_kb, querys, theta, query):
                     if condition.args[idx] in list(variable_theta.mappings.values()):
                         variable_theta.add(condition.args[idx], new_rule.generate_variable_name())
 
-
-
         for key in remove_key:
             del new_theta.mappings[key]
-
-##add new variable to new theta
+        ##add new variable to new theta
         new_theta.mappings.update(add_key)
-
 
         if len(variable_theta.mappings) != 0:
             for value, key in variable_theta.mappings.items():
                 for idx in range(len(rule.conclusion.args)):
                     if (new_rule.conclusion.args[idx] == value):
                         new_rule.conclusion.args[idx] = key
-
             for i_condition in range(len(new_rule.conditions)):
                 for i_arg in range(len(rule.conditions[i_condition].args)):
                     if variable_theta.mappings.get(new_rule.conditions[i_condition].args[i_arg]):
                         new_rule.conditions[i_condition].args[i_arg] = variable_theta.mappings.get(new_rule.conditions[i_condition].args[i_arg])
 
-
         new_querys = new_rule.conditions + querys[1:]
-
         new_theta.mappings.update(theta.mappings)
-
         res.update(fol_bc_ask(facts_of_kb,rules_of_kb,new_querys, new_theta,query))
 
-
     return res
-
-
 
 def backward_chaining(kb, query):
 
     facts_of_kb = copy.deepcopy(kb.facts)
     rules_of_kb = copy.deepcopy(kb.rules)
-
-
     theta = Theta()
-
     res = fol_bc_ask(facts_of_kb,rules_of_kb, [query], theta,query)
-
-
-
     if query.contains_variable():
         final_res = set()
         for subres in res:

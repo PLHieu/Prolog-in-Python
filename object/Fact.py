@@ -1,10 +1,7 @@
-from utility.utils import is_variable
 import copy
 from utility.utils import *
 
 class Fact:
-    def __deepcopy__(self, memodict={}):
-        return Fact(self.op,copy.deepcopy(self.args),self.negative)
 
     def __init__(self, *inp):
         if len(inp)== 1:
@@ -14,6 +11,8 @@ class Fact:
         elif len(inp) == 3:
             self.init2(inp[0],inp[1], inp[2])
 
+    def __deepcopy__(self, memodict={}):
+        return Fact(self.op,copy.deepcopy(self.args),self.negative)
 
 
     def __hash__(self):
@@ -25,7 +24,6 @@ class Fact:
         self.negative = negative
 
     def init1(self, str):
-
         # Example: female(princess_diana).
         str = str.strip().rstrip('.').replace(' ', '')
         sep_idx = str.index('(')
@@ -37,7 +35,6 @@ class Fact:
             self.negative = True
         else:
             self.negative = False
-
         # parse Arguments
         self.args = str[sep_idx + 1: -1].split(',')
 	
@@ -79,24 +76,21 @@ class Fact:
 
     @staticmethod
     def parse_fact(fact_str):
-
         fact_str = fact_str.strip().rstrip('.').replace(' ', '')
         sep_idx = fact_str.index('(')
-
-
         op = fact_str[:sep_idx]
         args = fact_str[sep_idx + 1: -1].split(',')
         return Fact(op, args)
 
     def update_predicate_string(self):
         """
-        cap nhat lai string dai dien
+        Cap nhat lai string dai dien
         """
         self.predicate_string = '~'[not self.negative:] + self.op + '(' + ','.join(self.args) + ')'
 
     def unify_with_predicate(self, predicate):
         """
-        dong nhat 2 fact trai dau, cung vitu voi nhau va cung so luong cac tham so
+        Dong nhat 2 fact trai dau, cung vitu voi nhau va cung so luong cac tham so
         tra ve false neu nhu khong dong nhat duoc, cung la bien, cung la hang o cac vi tri tuong ung, hoac khac do dai
         tra ve diction anh xa
         """
@@ -108,7 +102,7 @@ class Fact:
 
     def substitute(self, substitution):
         """
-        substitution la mot dictionary anh xa may thay doi cua hang tu
+        Substitution la mot dictionary anh xa may thay doi cua hang tu
         """
         if substitution:
             for index, arg in enumerate(self.args):
@@ -119,7 +113,7 @@ class Fact:
 
     def unify(self, predicate1_arg, predicate2_arg, substitution):
         """
-        dong nhat gia tri cua cac hang tu va tra ve mot dictionary anh xa
+        Dong nhat gia tri cua cac hang tu va tra ve mot dictionary anh xa
         tra ve False neu nhu khong anh xa duoc: cung la hang, cung la bien o 2 vi tri tuong ung
         """
         if substitution == False:

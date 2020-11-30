@@ -3,7 +3,6 @@ female(queen_elizabethII).
 married(queen_elizabethII, prince_philip).
 married(prince_philip,queen_elizabethII).
 
-
 parent(queen_elizabethII, prince_charles).
 parent(prince_philip, prince_charles).
 parent(queen_elizabethII, prince_andrew).

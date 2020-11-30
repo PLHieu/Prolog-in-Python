@@ -1,0 +1,89 @@
+vua(dat).
+.
+true.
+
+vua(X).
+.
+X = dat ;
+X = hieu ;
+X = son.
+
+thuoc_ha(kien,X).
+.
+X = dat.
+
+thuoc_ha(X,son).
+.
+X = minh ;
+X = phu ;
+X = dang ;
+X = nien ;
+X = khoa.
+
+thai_giam(X,hieu).
+.
+.
+
+quan(hai,dat).
+.
+true.
+
+hoang_tu(X,son).
+.
+.
+
+hoang_thai_tu(cong_vinh,hieu).
+.
+true.
+
+cong_chua(hari, dat).
+.
+true.
+
+cong_chua(X, hieu).
+.
+X = quynh.
+
+hoang_tu_phi(thuy_tien, hieu).
+.
+fase.
+
+pho_ma(X,dat).
+.
+X = hoang.
+
+phan_quoc(phu,dat).
+.
+true.
+
+phan_quoc(X,son).
+.
+.
+
+noi_gian(dang,dat,son).
+.
+fase.
+
+noi_gian(phu,son,dat).
+.
+fase.
+
+dong_minh(dat,son).
+.
+fase.
+
+ke_thu(dat,son).
+.
+fase.
+
+dong_minh(X,dat).
+.
+.
+
+dong_minh(dat,X).
+.
+.
+
+su_gia(X,dat,hieu)..
+.
+
