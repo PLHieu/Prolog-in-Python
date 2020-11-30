@@ -1,5 +1,4 @@
-
-from Fact import Fact
+from object.Fact import Fact
 import random
 import copy
 class Rule:

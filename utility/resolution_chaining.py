@@ -1,8 +1,6 @@
-import copy
-from utils import *
-
-from CNF_Sentence import Statement
-from Fact import Fact
+from utility.utils import *
+from object.CNF_Sentence import Statement
+from object.Fact import Fact
 # alpha la mot Fact
 def resolution_chaining(kb,alpha):
 
@@ -18,11 +16,18 @@ def resolution_chaining(kb,alpha):
     for rule in kb.rules:
         temp_kb.add(Statement(rule,2))
 
+    # init result list
+    result = set()
 
     # Neu nhu la query dang yes/no question
     if not(haveElementUppercase(alpha.args)):
         alpha.negate()
-        return startloop(temp_kb, alpha)
+
+        r = startloop(temp_kb, alpha)
+        if r:
+            result.add(True)
+
+        return result
 
     # Neu nhu alpha o dang cau hoi Ai ? Caigi?
     else:
@@ -45,9 +50,13 @@ def resolution_chaining(kb,alpha):
             # alphaStatement = Statement(new_fact, 1)
             # alphaStatement.add_statement_to_KB(KB2, KB_HASH)
             # alphaStatement.add_statement_to_KB(temp_kb, KB_HASH)
-            return startloop(temp_kb2, new_fact)
+            r = startloop(temp_kb2, new_fact)
+            if r:
+                result.add(co)
 
-def startloop(temp_kb, new_fact):
+        return result
+
+def startloop(temp_kb, new_fact, co = True):
     KB2 = set()
     KB_HASH = {}
 
@@ -105,46 +114,4 @@ def startloop(temp_kb, new_fact):
         for stmt in new_statements:
             stmt.add_statement_to_KB(KB2, KB_HASH)
 
-
         temp_kb = temp_kb.union(new_statements)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-def chuanhoa():
-    pass
-def doitenbiensangtenchuan():
-    pass
-
-def kiemtratapcon():
-    pass
-
-def resolutate(cau1, cau2):
-    pass
-
-def loaibotuongduong(cau):
-    pass
-
-def loaibosuyra(cau):
-    pass
-
-def chuyenandsangor(cau):
-    pass
-
-# kieu neu de x het thi khoong duoc nen chuyen sang aa,ab,ac
-def doitenbiensangtenchuan(cau):
-    pass

@@ -1,12 +1,10 @@
-
-from Fact import Fact
-from sentence import getnextquery,categorizeofsentence
-from Rule import Rule
-from forward_chaining import forward_chaining
-from backward_chaining import backward_chaining
-from resolution_chaining import resolution_chaining
+from object.Fact import Fact
+from utility.utils import getnextquery,categorizeofsentence
+from object.Rule import Rule
+from utility.forward_chaining import forward_chaining
+from utility.backward_chaining import backward_chaining
+from utility.resolution_chaining import resolution_chaining
 class KnowledgeBase:
-   #fact is list of condition
 
    def __init__(self, facts, rules):
       self.facts = facts

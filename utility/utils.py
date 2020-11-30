@@ -1,3 +1,21 @@
+from object import Fact
+from object.Fact import *
+def isUpper(string):
+    if (string[0].isupper()):
+        return True
+    return False
+
+def isLower(string):
+    if (string[0].islower()):
+        return True
+    return False
+
+def haveElementUppercase(l):
+    for str in l:
+        if isUpper(str):
+            return True
+    return False
+
 def categorizeofsentence(str):
    sent_str = str.strip()
    if not sent_str:
@@ -19,5 +37,13 @@ def getnextquery(inp_str):
       while not next_sentence.endswith('.'):
          i += 1
          next_sentence += inp_str[i].strip()
-#return next sentence and remain string
    return next_sentence, inp_str[i + 1:]
+
+def is_variable(x):
+   return isinstance(x, str) and x[0].isupper()
+
+def is_compound(x):
+   return isinstance(x, Fact)
+
+def is_list(x):
+   return isinstance(x, list)

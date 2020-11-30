@@ -1,9 +1,9 @@
-from unify import unify
-from ClassTheta import  Theta
+from utility.unify import unify
+from object.Theta import *
 from itertools import permutations
 
 
-def unify_of_rule(facts_1, facts_2):  # Generalized Modus Ponens
+def unify_of_rule(facts_1, facts_2):
     if len(facts_1) != len(facts_2):
         return False
 

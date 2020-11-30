@@ -1,10 +1,9 @@
-from unify import unify,is_variable,is_compound,is_list
-from ClassTheta import Theta
+from utility.unify import unify,is_variable
+from object.Theta import *
 import copy
 
 
 def fol_bc_ask(facts_of_kb, rules_of_kb, querys, theta, root_query):
-
     res=set()
     #if querys is empty then add result
     if len(querys)==0:
@@ -25,7 +24,7 @@ def fol_bc_ask(facts_of_kb, rules_of_kb, querys, theta, root_query):
         if (const):
             accepted_conclusion.args[i] = const
 
-    #loop fact in kb
+
     for fact in facts_of_kb:
         #new theta for accepted conclusion and this fact
         new_theta = unify(fact, accepted_conclusion, Theta())
@@ -42,7 +41,6 @@ def fol_bc_ask(facts_of_kb, rules_of_kb, querys, theta, root_query):
         #continue other rule
         if not new_theta:
             continue
-
 
         variable_theta = Theta()#virtal theta have key is variable and value is variable
         remove_key = []#saving key need to delete
@@ -65,26 +63,32 @@ def fol_bc_ask(facts_of_kb, rules_of_kb, querys, theta, root_query):
                     if condition.args[idx] in list(variable_theta.mappings.values()):
                         #change the variable to new name, which not in new rule
                         variable_theta.add(condition.args[idx], new_rule.generate_variable_name())
+
         #remove key and value in new_theta some saved key in remobe_key
         for key in remove_key:
             del new_theta.mappings[key]
+
         if len(variable_theta.mappings) != 0:
             #change arg in conclusion of new rule
             for value, key in variable_theta.mappings.items():
                 for idx in range(len(rule.conclusion.args)):
                     if (new_rule.conclusion.args[idx] == value):
                         new_rule.conclusion.args[idx] = key
+
             # change arg in condition of new rule
             for i_condition in range(len(new_rule.conditions)):
                 for i_arg in range(len(rule.conditions[i_condition].args)):
                     if variable_theta.mappings.get(new_rule.conditions[i_condition].args[i_arg]):
                         new_rule.conditions[i_condition].args[i_arg] = variable_theta.mappings.get(new_rule.conditions[i_condition].args[i_arg])
 
+
         #new query is replaced conditions and remain query
         new_querys = new_rule.conditions + querys[1:]
         #new thate add old theta
         new_theta.mappings.update(theta.mappings)
         res.update(fol_bc_ask(facts_of_kb,rules_of_kb,new_querys, new_theta, root_query))
+
+
     return res
 
 def backward_chaining(kb, query):
@@ -93,7 +97,8 @@ def backward_chaining(kb, query):
     rules_of_kb = copy.deepcopy(kb.rules)
     theta = Theta()
 
-    res = fol_bc_ask(facts_of_kb,rules_of_kb,copy.deepcopy([query]), theta,query)
+
+    res = fol_bc_ask(facts_of_kb,rules_of_kb,copy.deepcopy([query]), theta, query)
 
     if query.contains_variable():
         final_res = set()
@@ -103,6 +108,8 @@ def backward_chaining(kb, query):
                 if is_variable(arg):
                     theta0.add(arg,subres.mappings.get(arg))
             final_res.add(theta0)
+        if len(final_res)==0:
+            final_res.add("ERROR: Unknown procedure")
         return final_res
 
     if res:
